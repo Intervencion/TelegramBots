@@ -10,7 +10,7 @@ import sqlite3
 con = sqlite3.connect('canteros.db',check_same_thread = False)
 c = con.cursor()
 
-admins = [1896312]
+admins = []
 
 TOKEN = ''
 bot = telebot.TeleBot(TOKEN)
