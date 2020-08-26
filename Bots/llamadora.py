@@ -152,41 +152,6 @@ def existeUserGru(uid,cid):
 	print(f"Vamos a devolver el valor de EUG que es {EUG}")
 	return EUG
 
-
-# @bot.message_handler(commands=['list'])
-# def command_id(m):
-	# cid = m.chat.id
-	uname = m.from_user.username
-	uid = m.from_user.id
-	# arrayl = []
-	# try:
-		# print("entro en el try")
-		# c.execute(f"SELECT idUsuario, ALIAS FROM Usuarios INNER JOIN UsuGrupo ON Usuarios.idUsuario = UsuGrupo.idUsuarioFK WHERE UsuGrupo.idGrupoFK ='{cid}' ORDER BY idUsuario ASC")
-		# print("hago el for?")
-		# for i in c:
-			# print("1")
-			# idUsuario_resultado = i[0]
-			# print("2)" + str(idUsuario_resultado))
-			# ALIAS_resultado = i[1]
-			# print("3)" + str(ALIAS_resultado))
-			# p = "[" + str(ALIAS_resultado) + "](tg://user?id=" + str(idUsuario_resultado) + ")"
-			# print("4" + str(p))
-			# arrayl.append(p)
-			# print("5")
-		# f = str(arrayl).lstrip("[").rstrip("]").replace("'","").replace("'","")
-		# f = f.replace(",", "\n")
-		# if not f:
-			# f = "The DB is empty. Please add yourself with `/add`"
-			# print(str(f))
-			# bot.send_message(cid, f'{f}', parse_mode = "Markdown")
-			# con.commit()
-		# else:
-			# print(str(f))
-			# bot.send_message(cid, f'{f}', parse_mode = "Markdown")
-			# con.commit()
-	# except:
-		# bot.send_message(cid, "An error ocurred. Report to @Intervencion.")
-
 @bot.message_handler(commands=['list'])
 def command_id(m):
 	cid = m.chat.id
@@ -198,18 +163,27 @@ def command_id(m):
 		c.execute(f"SELECT idUsuario, ALIAS FROM Usuarios INNER JOIN UsuGrupo ON Usuarios.idUsuario = UsuGrupo.idUsuarioFK WHERE UsuGrupo.idGrupoFK ='{cid}' ORDER BY idUsuario ASC")
 		print("hago el for?")
 		for i in c:
-			print("1")
-			idUsuario_resultado = i[0]
-			print("2)" + str(idUsuario_resultado))
-			ALIAS_resultado = i[1]
-			print("3)" + str(ALIAS_resultado))
-			p = "[" + str(ALIAS_resultado) + "](tg://user?id=" + str(idUsuario_resultado) + ")"
-			print("4" + str(p))
-			arrayl.append(p)
-			print("5")
-		#f = str(arrayl).lstrip("[").rstrip("]").replace("'","").replace("'","")
+			if i[1].startswith("@"):
+				print("1")
+				idUsuario_resultado = i[0]
+				print("2)" + str(idUsuario_resultado))
+				ALIAS_resultado = i[1]
+				print("3)" + str(ALIAS_resultado))
+				p = str(ALIAS_resultado)
+				print("4" + str(p))
+				arrayl.append(p)
+				print("5")
+			else:
+				print("1")
+				idUsuario_resultado = i[0]
+				print("2)" + str(idUsuario_resultado))
+				ALIAS_resultado = i[1]
+				print("3)" + str(ALIAS_resultado))
+				p = "[" + str(ALIAS_resultado) + "](tg://user?id=" + str(idUsuario_resultado) + ")"
+				print("4" + str(p))
+				arrayl.append(p)
+				print("5")
 		f = List2Str(arrayl, ', ', ' y ')
-		#f = f.replace(",", "\n")
 		if not f:
 			f = "The DB is empty. Please add yourself with `/add`"
 			print(str(f))
@@ -231,9 +205,9 @@ def command_addbtag(m):
 	ulm = m.from_user.last_name
 	if (m.from_user.username is None):
 		if (ulm == None):
-			noname = ufm
+			uname = ufm
 		else:
-			noname = f'{ufm} {ulm}'
+			uname = f'{ufm} {ulm}'
 	else:
 		uname = "@"+m.from_user.username
 	if(cid>0):
