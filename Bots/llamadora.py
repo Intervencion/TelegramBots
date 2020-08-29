@@ -191,6 +191,7 @@ def command_id(m):
 			con.commit()
 		else:
 			print(str(f))
+			f = f.replace("_", "\_")
 			bot.send_message(cid, f'{f}', parse_mode = "Markdown")
 			con.commit()
 	except:
